@@ -49,13 +49,9 @@ process.on("unhandledRejection", (reason: any, p: Promise<any>) => {
 
 async function main() {
   const app = express()
-  app.use(express.json())
+  app.use(express.json()) // MIGHT NEED TO MOVE THIS FOR STRIPE
   app.disable("x-powered-by")
   app.use(cors())
-
-  // Remix public
-  app.use(express.static("public"))
-  app.use(express.static("src/public"))
 
   app.use((req, res, next) => {
     const reqID = uuidv4()
