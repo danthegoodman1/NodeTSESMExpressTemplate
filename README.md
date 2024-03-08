@@ -1,2 +1,1 @@
-# NodeTSESMTemplate
 # NodeTSESMExpressTemplate
