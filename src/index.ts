@@ -1,11 +1,7 @@
-import * as dotenv from "dotenv"
-dotenv.config()
-
 import express from "express"
 import { v4 as uuidv4 } from "uuid"
 import cors from "cors"
-import { statfs } from "fs/promises"
-
+import { ZodError } from "zod"
 import { logger } from "./logger/index.js"
 
 import { extractError } from "./utils.js"
@@ -70,6 +66,16 @@ async function main() {
 
   app.get("/hc", (req, res) => {
     res.sendStatus(200)
+  })
+
+  // Error handler
+  app.use((err: any, req: any, res: any, next: any) => {
+    if (err instanceof ZodError) {
+      return res.status(400).send(`Invalid body: ${err.message}`)
+    }
+
+    logger.error({ err, id: req.id })
+    res.status(500).send("Internal Server Error")
   })
 
   const server = app.listen(listenPort, () => {
