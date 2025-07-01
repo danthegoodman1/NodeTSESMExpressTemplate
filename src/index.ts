@@ -52,6 +52,7 @@ async function main() {
   app.use((req, res, next) => {
     const reqID = uuidv4()
     req.id = reqID
+    res.header("X-Request-ID", reqID)
     next()
   })
 
