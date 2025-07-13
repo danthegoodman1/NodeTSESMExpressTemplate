@@ -1,7 +1,7 @@
 import { pino } from "pino"
 
 export const logger = pino(
-  process.env.PRETTY === "1"
+  process.env.DEBUG === "1"
     ? {
         transport: {
           target: "pino-pretty",
